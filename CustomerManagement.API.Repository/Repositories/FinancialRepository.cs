@@ -10,22 +10,22 @@ namespace CustomerManagement.API.Repository.Repositories
 {
     public class FinancialRepository : IFinancialRepository
     {
-        public Task CreateTransactionAsync(Transaction transaction)
+        public Task CreateTransactionAsync(Transaction? transaction)
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
+        public Task<UserAccountBalance> CreateUserAccountAsync(long userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task GetUserAccountsBalanceAsync(long userId)
+        public Task<UserAccountBalance> GetUserAccountsBalanceAsync(long userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
+        public Task<UserAccountBalance> UpdateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
         {
             throw new NotImplementedException();
         }

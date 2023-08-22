@@ -1,15 +1,16 @@
 ﻿using CustomerManagement.API.Repository.Interfaces;
 using CustomerManagement.API.Repository.Models;
+using CustomerManagement.API.Service.DataTransferObjects;
 using CustomerManagement.API.Service.Interfaces;
+using CustomerManagement.API.Service.Mappers;
 
 namespace CustomerManagement.API.Service.Services
 {
     public class FinancialService : IFinancialService
     {
-        private const string TransactionAmountErrorMessage = "Amount of a transaction must be more than zero.";
+        private const string TransactionAmountErrorMessage = "Amount of a transaction not be zero.";
         private const string UserIdErrorMessage = "UserId value must be more than zero.";
-        private const string BalanceErrorMessage = "Ballance must not be negative.";
-
+        
         private readonly IFinancialRepository _financialRepository;
 
         public FinancialService(IFinancialRepository financialRepository) 
@@ -17,29 +18,31 @@ namespace CustomerManagement.API.Service.Services
             _financialRepository = financialRepository;
         }
 
-        public async Task CreateTransactionAsync(Transaction transaction)
+        public async Task CreateTransactionAsync(TransactionDto transactionDto)
         {
-            if (transaction == null)
+            if (transactionDto == null)
             {
-                throw new ArgumentNullException(nameof(transaction));
+                throw new ArgumentNullException(nameof(transactionDto));
             }
 
-            if (transaction.Amount <= 0)
+            if (transactionDto.Amount == 0)
             {
                 throw new ArgumentException(TransactionAmountErrorMessage);
             }
 
-            await _financialRepository.CreateTransactionAsync(transaction);
+            await _financialRepository.CreateTransactionAsync(transactionDto.FromTransactionDto());
         }
 
-        public async Task CreateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
+        public async Task<UserAccountDto?> CreateUserAccountAsync(long userId)
         {
-            if (userAccountBalance == null)
+            if (userId <= 0)
             {
-                throw new ArgumentNullException(nameof(userAccountBalance));
+                throw new ArgumentException(UserIdErrorMessage);
             }
 
-            await _financialRepository.CreateUserAccountBalanceAsync(userAccountBalance);
+            var userAccountBalance = await _financialRepository.CreateUserAccountAsync(userId);
+
+            return userAccountBalance.ToUserAccountDto();
         }
 
         public async Task<UserAccountBalance> GetUserAccountsBalanceAsync(long userId)
@@ -50,16 +53,6 @@ namespace CustomerManagement.API.Service.Services
             }
 
             return await _financialRepository.GetUserAccountsBalanceAsync(userId);
-        }
-        
-        public async Task<UserAccountBalance> UpdateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
-        {
-            if (userAccountBalance.Balance < 0)
-            {
-                throw new ArgumentException(BalanceErrorMessage);
-            }
-
-            return await _financialRepository.UpdateUserAccountBalanceAsync(userAccountBalance);
         }
     }
 }

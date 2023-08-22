@@ -2,7 +2,7 @@
 {
     public class UserDto
     {
-        public Guid CustomerUid { get; set; }
+        public long UserId { get; set; }
 
         public string? Name { get; set; }
 
