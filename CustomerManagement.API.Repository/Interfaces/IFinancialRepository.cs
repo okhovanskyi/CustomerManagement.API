@@ -4,12 +4,11 @@ namespace CustomerManagement.API.Repository.Interfaces
 {
     public interface IFinancialRepository
     {
-        Task CreateUserAccountBalanceAsync(UserAccountBalance userAccountBalance);
+        Task<UserAccountBalance> CreateUserAccountAsync(long userId);
 
-        Task CreateTransactionAsync(Transaction transaction);
+        Task CreateTransactionAsync(Transaction? transaction);
 
-        Task<UserAccountBalance> GetUserAccountsBalanceAsync(long userId);
-
-        Task<UserAccountBalance> UpdateUserAccountBalanceAsync(UserAccountBalance userAccountBalance);
+        Task<List<UserAccountBalance>> GetAccountsBalanceAsync(long userId);
+        Task<List<Transaction>> GetTransactionsAsync(long userId);
     }
 }

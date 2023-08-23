@@ -14,9 +14,37 @@ namespace CustomerManagement.API.Service.Mappers
 
             return new UserDto
             {
-                CustomerUid = input.CustomerUid,
+                UserId = input.Id,
                 Name = input.Name,
                 Surname = input.Surname
+            };
+        }
+
+        internal static UserAccountDto? ToUserAccountDto(this UserAccountBalance input)
+        {
+            if (input == null) 
+            { 
+                return null; 
+            }
+
+            return new UserAccountDto
+            {
+                UserId = input.UserId,
+                AccountNumber = input.AccountNumber
+            };
+        }
+
+        internal static AccountBalanceDto? ToAccountBalanceDto(this UserAccountBalance input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new AccountBalanceDto
+            {
+                AccountNumber = input.AccountNumber,
+                Balance = input.Balance
             };
         }
     }
