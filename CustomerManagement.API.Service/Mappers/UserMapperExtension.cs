@@ -33,5 +33,19 @@ namespace CustomerManagement.API.Service.Mappers
                 AccountNumber = input.AccountNumber
             };
         }
+
+        internal static AccountBalanceDto? ToAccountBalanceDto(this UserAccountBalance input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new AccountBalanceDto
+            {
+                AccountNumber = input.AccountNumber,
+                Balance = input.Balance
+            };
+        }
     }
 }

@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Queries\" />
+    <ProjectReference Include="..\CustomerManagement.API.Service\CustomerManagement.API.Service.csproj" />
   </ItemGroup>
 
 </Project>

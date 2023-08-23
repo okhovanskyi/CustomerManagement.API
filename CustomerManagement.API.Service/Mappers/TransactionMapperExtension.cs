@@ -20,5 +20,21 @@ namespace CustomerManagement.API.Service.Mappers
                 TransactionType = input.TransactionType
             };
         }
+
+        internal static TransactionDto? ToTransactionDto(this Transaction input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new TransactionDto
+            {
+                AccountNumber = input.AccountNumber,
+                Amount = input.Amount,
+                CreatedDateTime = input.CreatedDateTime,
+                TransactionType = input.TransactionType
+            };
+        }
     }
 }

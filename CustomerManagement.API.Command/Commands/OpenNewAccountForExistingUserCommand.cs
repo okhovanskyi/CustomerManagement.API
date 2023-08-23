@@ -8,7 +8,7 @@ namespace CustomerManagement.API.Command.Commands
             Id = Guid.NewGuid();
         }
         
-        public Guid Id { get; set; }
+        public Guid Id { get; }
 
         public Guid CustomerUid { get; set; }
 

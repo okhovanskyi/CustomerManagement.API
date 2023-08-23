@@ -8,6 +8,8 @@ namespace CustomerManagement.API.Service.DataTransferObjects
 
         public Guid AccountNumber { get; set; }
 
+        public DateTime CreatedDateTime { get; set; }
+
         public TransactionType TransactionType { get; set; }
     }
 }

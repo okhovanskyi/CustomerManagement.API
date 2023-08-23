@@ -4,7 +4,6 @@ using CustomerManagement.API.Service.DataTransferObjects;
 using CustomerManagement.API.Service.Interfaces;
 using System.Net;
 
-
 namespace CustomerManagement.API.Command.Handlers
 {
     public class UsersFinancialDataCommadHandler : ICommandHandler<OpenNewAccountForExistingUserCommand, CommandResult>
@@ -14,12 +13,14 @@ namespace CustomerManagement.API.Command.Handlers
 
         private const string CommandCompletedSuccesfullyMessage = "Command Completed Succesfully.";
 
-        private readonly IFinancialService _financialService;
+        private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
         private readonly IUserService _userService;
 
-        public UsersFinancialDataCommadHandler(IFinancialService financialService, IUserService userService) 
+        public UsersFinancialDataCommadHandler(IAccountService accountService, ITransactionService transactionService, IUserService userService) 
         {
-            _financialService = financialService;
+            _accountService = accountService;
+            _transactionService = transactionService;
             _userService = userService;
         }
 
@@ -38,7 +39,7 @@ namespace CustomerManagement.API.Command.Handlers
                     };
                 }
 
-                var userAccount = await _financialService.CreateUserAccountAsync(userDto.UserId);
+                var userAccount = await _accountService.CreateUserAccountAsync(userDto.UserId);
 
                 if (userAccount == null)
                 {
@@ -51,7 +52,7 @@ namespace CustomerManagement.API.Command.Handlers
 
                 if (command.InitialCredit != 0)
                 {
-                    await _financialService.CreateTransactionAsync(new TransactionDto
+                    await _transactionService.CreateTransactionAsync(new TransactionDto
                     {
                         AccountNumber = userAccount.AccountNumber,
                         Amount = command.InitialCredit,

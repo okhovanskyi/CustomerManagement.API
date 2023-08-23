@@ -20,12 +20,7 @@ namespace CustomerManagement.API.Repository.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<UserAccountBalance> GetUserAccountsBalanceAsync(long userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UserAccountBalance> UpdateUserAccountBalanceAsync(UserAccountBalance userAccountBalance)
+        public Task<List<UserAccountBalance>> GetAccountsBalanceAsync(long userId)
         {
             throw new NotImplementedException();
         }
