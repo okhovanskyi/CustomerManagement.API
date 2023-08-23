@@ -57,8 +57,8 @@ namespace CustomerManagement.API.Command.Handlers
                         AccountNumber = userAccount.AccountNumber,
                         Amount = command.InitialCredit,
                         TransactionType = command.InitialCredit > 0 ?
-                        Repository.Models.Enums.TransactionType.Debit :
-                        Repository.Models.Enums.TransactionType.Credit
+                        Persistence.Enums.TransactionType.Debit :
+                        Persistence.Enums.TransactionType.Credit
                     });
                 }
             }

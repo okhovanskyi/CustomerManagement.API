@@ -1,4 +1,4 @@
-﻿namespace CustomerManagement.API.Repository.Models.Enums
+﻿namespace CustomerManagement.API.Persistence.Enums
 {
     public enum TransactionType
     {

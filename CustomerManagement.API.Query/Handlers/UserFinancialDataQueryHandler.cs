@@ -38,14 +38,49 @@ namespace CustomerManagement.API.Query.Handlers
                     };
                 }
 
-                return new GetUserFinancialDataQueryResult
+                var result = new GetUserFinancialDataQueryResult
                 {
                     UserDto = userDto,
-                    TransactionDtos = await _transactionService.GetTransactionsAsync(userDto.UserId),
-                    AccountBalanceDtos = await _accountService.GetAccountsBalanceAsync(userDto.UserId),
+                    AccountBalanceDtos = new List<Service.DataTransferObjects.AccountBalanceDto?>(),
+                    TransactionDtos = new List<Service.DataTransferObjects.TransactionDto?>(),
                     HttpStatusCode = HttpStatusCode.OK,
                     Message = QueryCompletedSuccesfullyMessage
                 };
+
+                var accounts = await _accountService.GetAccountsAsync(userDto.UserId);
+
+                if (accounts == null || accounts.Count == 0)
+                {
+                    return result;
+                }
+
+                foreach (var account in accounts)
+                {
+                    if (account == null)
+                    {
+                        continue;
+                    }
+
+                    var transactions = await _transactionService.GetTransactionsAsync(account.AccountNumber);
+
+                    if (transactions == null || transactions.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    var filterredTransactions = transactions.Where(transaction => transaction != null);
+
+                    result.TransactionDtos.AddRange(filterredTransactions);
+
+                    account.Balance = filterredTransactions.Sum(transaction =>
+                    transaction.TransactionType == Persistence.Enums.TransactionType.Debit ?
+                    transaction.Amount :
+                    -transaction.Amount);
+
+                    result.AccountBalanceDtos.Add(account);
+                }                
+
+                return result;
             }
             catch (ArgumentException argumentException)
             {
