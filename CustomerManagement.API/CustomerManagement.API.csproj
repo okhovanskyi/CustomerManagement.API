@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerManagement.API.Command\CustomerManagement.API.Command.csproj" />
+    <ProjectReference Include="..\CustomerManagement.API.Query\CustomerManagement.API.Query.csproj" />
+  </ItemGroup>
+
 </Project>

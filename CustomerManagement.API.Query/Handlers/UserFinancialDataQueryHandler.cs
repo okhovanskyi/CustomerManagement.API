@@ -68,6 +68,7 @@ namespace CustomerManagement.API.Query.Handlers
                         continue;
                     }
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var filterredTransactions = transactions.Where(transaction => transaction != null);
 
                     result.TransactionDtos.AddRange(filterredTransactions);
@@ -76,6 +77,7 @@ namespace CustomerManagement.API.Query.Handlers
                     transaction.TransactionType == Persistence.Enums.TransactionType.Debit ?
                     transaction.Amount :
                     -transaction.Amount);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                     result.AccountBalanceDtos.Add(account);
                 }                
@@ -87,8 +89,7 @@ namespace CustomerManagement.API.Query.Handlers
                 return new GetUserFinancialDataQueryResult
                 {
                     HttpStatusCode = HttpStatusCode.BadRequest,
-                    Message = argumentException.Message,
-                    AggregateException = new AggregateException(argumentException)
+                    Message = argumentException.Message                    
                 };
             }
         }

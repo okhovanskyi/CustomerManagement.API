@@ -1,9 +1,9 @@
 ﻿using CustomerManagement.API.Command.Interfaces;
 namespace CustomerManagement.API.Command.Commands
 {
-    public class OpenNewAccountForExistingUserCommand : ICommand
+    public class OpenNewAccountForUserCommand : ICommand
     {
-        public OpenNewAccountForExistingUserCommand() 
+        public OpenNewAccountForUserCommand() 
         {
             Id = Guid.NewGuid();
         }
