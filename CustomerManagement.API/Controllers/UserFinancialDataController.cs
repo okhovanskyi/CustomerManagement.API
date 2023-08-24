@@ -54,7 +54,7 @@ namespace CustomerManagement.API.Controllers
             });
         }
 
-        // POST api/<UserFinancialDataController>
+        // POST api/<UserFinancialDataController>/currentUser
         [HttpPost("currentUser", Name = "OpenNewAccountForCurrentUser")]
         public async Task<CommandResult> Post(long initialCredit)
         {

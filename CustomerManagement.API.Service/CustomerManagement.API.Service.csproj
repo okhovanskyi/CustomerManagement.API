@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CustomerManagement.API.Repository\CustomerManagement.API.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="CustomerManagement.API.UnitTests" />
+  </ItemGroup>
+
 </Project>

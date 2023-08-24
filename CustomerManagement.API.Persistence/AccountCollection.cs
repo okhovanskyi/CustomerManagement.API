@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CustomerManagement.API.Persistence
 {
+    [ExcludeFromCodeCoverage]
     public class AccountCollection : ConcurrentDictionary<long, Tuple<long, Guid>>
     {
         private int Identity;

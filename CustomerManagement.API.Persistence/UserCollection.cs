@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CustomerManagement.API.Persistence
 {
+    [ExcludeFromCodeCoverage]
     public class UserCollection : ConcurrentDictionary<long, Tuple<Guid, string, string>>
     {
         private const string NameString = "Name";
