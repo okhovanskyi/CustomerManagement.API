@@ -7,6 +7,6 @@ namespace CustomerManagement.API.Service.Interfaces
     {
         Task<UserAccountDto?> CreateUserAccountAsync(long userId);
 
-        Task<List<AccountBalanceDto?>> GetAccountsBalanceAsync(long userId);
+        Task<List<AccountBalanceDto?>> GetAccountsAsync(long userId);
     }
 }

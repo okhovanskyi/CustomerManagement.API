@@ -6,7 +6,7 @@ using System.Net;
 
 namespace CustomerManagement.API.Command.Handlers
 {
-    public class UsersFinancialDataCommadHandler : ICommandHandler<OpenNewAccountForExistingUserCommand, CommandResult>
+    public class UsersFinancialDataCommadHandler : ICommandHandler<OpenNewAccountForUserCommand, CommandResult>
     {
         private const string UserNotFoundErrorMessage = "User Not Found.";
         private const string AccountWasNotCreatedErrorMessage = "Account Was Not Created.";
@@ -24,7 +24,7 @@ namespace CustomerManagement.API.Command.Handlers
             _userService = userService;
         }
 
-        public async Task<CommandResult> HandleAsync(OpenNewAccountForExistingUserCommand command)
+        public async Task<CommandResult> HandleAsync(OpenNewAccountForUserCommand command)
         {
             try
             {
@@ -57,19 +57,19 @@ namespace CustomerManagement.API.Command.Handlers
                         AccountNumber = userAccount.AccountNumber,
                         Amount = command.InitialCredit,
                         TransactionType = command.InitialCredit > 0 ?
-                        Repository.Models.Enums.TransactionType.Debit :
-                        Repository.Models.Enums.TransactionType.Credit
+                        Persistence.Enums.TransactionType.Debit :
+                        Persistence.Enums.TransactionType.Credit
                     });
                 }
             }
             catch (ArgumentException argumentException) 
             {
-                return new CommandResult 
-                { 
-                    HttpStatusCode = HttpStatusCode.BadRequest, 
-                    Message = argumentException.Message, 
-                    AggregateException = new AggregateException(argumentException) };
-            }
+                return new CommandResult
+                {
+                    HttpStatusCode = HttpStatusCode.BadRequest,
+                    Message = argumentException.Message
+                };
+            };
 
             return new CommandResult 
             { 

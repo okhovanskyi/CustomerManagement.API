@@ -6,6 +6,6 @@ namespace CustomerManagement.API.Service.Interfaces
     {
         Task CreateTransactionAsync(TransactionDto transactionDto);
 
-        Task<List<TransactionDto?>> GetTransactionsAsync(long userId);
+        Task<List<TransactionDto?>> GetTransactionsAsync(Guid accountNumber);
     }
 }

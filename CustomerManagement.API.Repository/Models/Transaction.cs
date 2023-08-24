@@ -1,4 +1,4 @@
-﻿using CustomerManagement.API.Repository.Models.Enums;
+﻿using CustomerManagement.API.Persistence.Enums;
 
 namespace CustomerManagement.API.Repository.Models
 {

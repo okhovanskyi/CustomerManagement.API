@@ -4,6 +4,6 @@ namespace CustomerManagement.API.Repository.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUserAsync(Guid customerUid);
+        Task<User?> GetUserAsync(Guid customerUid);
     }
 }

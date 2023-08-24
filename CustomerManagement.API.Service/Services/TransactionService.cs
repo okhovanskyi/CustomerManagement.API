@@ -7,14 +7,13 @@ namespace CustomerManagement.API.Service.Services
 {
     public class TransactionService : ITransactionService
     {
-        private const string TransactionAmountErrorMessage = "Amount of a transaction must not be zero.";
-        private const string UserIdErrorMessage = "UserId value must be more than zero.";
+        private const string TransactionAmountErrorMessage = "Amount of a transaction must not be zero.";        
 
-        private readonly IFinancialRepository _financialRepository;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public TransactionService(IFinancialRepository financialRepository)
+        public TransactionService(ITransactionRepository transactionRepository)
         {
-            _financialRepository = financialRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task CreateTransactionAsync(TransactionDto transactionDto)
@@ -29,17 +28,12 @@ namespace CustomerManagement.API.Service.Services
                 throw new ArgumentException(TransactionAmountErrorMessage);
             }
 
-            await _financialRepository.CreateTransactionAsync(transactionDto.FromTransactionDto());
+            await _transactionRepository.CreateTransactionAsync(transactionDto.FromTransactionDto());
         }
 
-        public async Task<List<TransactionDto?>> GetTransactionsAsync(long userId)
+        public async Task<List<TransactionDto?>> GetTransactionsAsync(Guid accountNumber)
         {
-            if (userId <= 0)
-            {
-                throw new ArgumentException(UserIdErrorMessage);
-            }
-
-            var transactionsList = await _financialRepository.GetTransactionsAsync(userId);
+            var transactionsList = await _transactionRepository.GetTransactionsAsync(accountNumber);
 
             return transactionsList
                 .Where(transaction => transaction != null)

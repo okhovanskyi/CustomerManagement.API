@@ -9,11 +9,11 @@ namespace CustomerManagement.API.Service.Services
     {
         private const string UserIdErrorMessage = "UserId value must be more than zero.";
         
-        private readonly IFinancialRepository _financialRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public AccountService(IFinancialRepository financialRepository) 
+        public AccountService(IAccountRepository accountRepository) 
         {
-            _financialRepository = financialRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<UserAccountDto?> CreateUserAccountAsync(long userId)
@@ -23,28 +23,28 @@ namespace CustomerManagement.API.Service.Services
                 throw new ArgumentException(UserIdErrorMessage);
             }
 
-            var userAccountBalance = await _financialRepository.CreateUserAccountAsync(userId);
+            var userAccountBalance = await _accountRepository.CreateUserAccountAsync(userId);
 
-            return userAccountBalance.ToUserAccountDto();
+            return userAccountBalance?.ToUserAccountDto();
         }
 
-        public async Task<List<AccountBalanceDto?>> GetAccountsBalanceAsync(long userId)
+        public async Task<List<AccountBalanceDto?>> GetAccountsAsync(long userId)
         {
             if (userId <= 0)
             { 
                 throw new ArgumentException(UserIdErrorMessage); 
             }
 
-            var accountBalanceList = await _financialRepository.GetAccountsBalanceAsync(userId);
+            var accountList = await _accountRepository.GetAccountsAsync(userId);
 
-            if (accountBalanceList == null || accountBalanceList.Count == 0)
+            if (accountList == null || accountList.Count == 0)
             {
                 return new List<AccountBalanceDto?>();
             }
 
-            return accountBalanceList
-                .Where(accountBalance => accountBalance != null)
-                .Select(accountBalance => accountBalance.ToAccountBalanceDto())
+            return accountList
+                .Where(account => account != null)
+                .Select(account => account.ToAccountBalanceDto())
                 .ToList();
         }
     }

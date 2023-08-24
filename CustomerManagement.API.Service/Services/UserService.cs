@@ -18,7 +18,7 @@ namespace CustomerManagement.API.Service.Services
         {
             var user = await _userRepository.GetUserAsync(customerUid);
 
-            return user.ToUserDto();
+            return user?.ToUserDto();
         }
     }
 }

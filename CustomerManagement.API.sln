@@ -5,13 +5,21 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerManagement.API", "CustomerManagement.API\CustomerManagement.API.csproj", "{C1E50066-5D74-4FC6-93DE-7383FF4747E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.Command", "CustomerManagement.API.Command\CustomerManagement.API.Command.csproj", "{AA35E44C-22C0-4898-B30A-1CCD09F7870A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerManagement.API.Command", "CustomerManagement.API.Command\CustomerManagement.API.Command.csproj", "{AA35E44C-22C0-4898-B30A-1CCD09F7870A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.Query", "CustomerManagement.API.Query\CustomerManagement.API.Query.csproj", "{C3DD9A2C-2D6C-4E73-9D3C-62D3253C1139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerManagement.API.Query", "CustomerManagement.API.Query\CustomerManagement.API.Query.csproj", "{C3DD9A2C-2D6C-4E73-9D3C-62D3253C1139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.Repository", "CustomerManagement.API.Repository\CustomerManagement.API.Repository.csproj", "{9684611E-1B20-4B8F-81EE-C822FFAED7DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerManagement.API.Repository", "CustomerManagement.API.Repository\CustomerManagement.API.Repository.csproj", "{9684611E-1B20-4B8F-81EE-C822FFAED7DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.Service", "CustomerManagement.API.Service\CustomerManagement.API.Service.csproj", "{A8F8E0C1-992C-43B8-8971-7DFF70711E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerManagement.API.Service", "CustomerManagement.API.Service\CustomerManagement.API.Service.csproj", "{A8F8E0C1-992C-43B8-8971-7DFF70711E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.UnitTests", "CustomerManagement.API.UnitTests\CustomerManagement.API.UnitTests.csproj", "{01B5FC3E-1104-47AE-8543-265C179B7F7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.IntegrationTests", "CustomerManagement.API.IntegrationTests\CustomerManagement.API.IntegrationTests.csproj", "{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E5DA54D1-0ED8-4FF8-96A7-5117F4B038FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement.API.Persistence", "CustomerManagement.API.Persistence\CustomerManagement.API.Persistence.csproj", "{B4F79930-D686-41CE-AC6E-1EFD42D38C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +47,25 @@ Global
 		{A8F8E0C1-992C-43B8-8971-7DFF70711E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8F8E0C1-992C-43B8-8971-7DFF70711E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8F8E0C1-992C-43B8-8971-7DFF70711E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B5FC3E-1104-47AE-8543-265C179B7F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B5FC3E-1104-47AE-8543-265C179B7F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B5FC3E-1104-47AE-8543-265C179B7F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B5FC3E-1104-47AE-8543-265C179B7F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F79930-D686-41CE-AC6E-1EFD42D38C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F79930-D686-41CE-AC6E-1EFD42D38C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F79930-D686-41CE-AC6E-1EFD42D38C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F79930-D686-41CE-AC6E-1EFD42D38C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01B5FC3E-1104-47AE-8543-265C179B7F7A} = {E5DA54D1-0ED8-4FF8-96A7-5117F4B038FF}
+		{4EC6EBD5-C13D-4B8E-858E-F4AFC01BE033} = {E5DA54D1-0ED8-4FF8-96A7-5117F4B038FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {217F861B-6E27-4D64-A164-42F0CBBC728D}
