@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -17,8 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controller\" />
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\CustomerManagement.API.Persistence\CustomerManagement.API.Persistence.csproj" />
+    <ProjectReference Include="..\CustomerManagement.API.Repository\CustomerManagement.API.Repository.csproj" />
+    <ProjectReference Include="..\CustomerManagement.API\CustomerManagement.API.csproj" />
   </ItemGroup>
 
 </Project>

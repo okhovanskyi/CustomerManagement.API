@@ -11,13 +11,16 @@ using CustomerManagement.API.Repository.Interfaces;
 using CustomerManagement.API.Repository.Repositories;
 using CustomerManagement.API.Service.Interfaces;
 using CustomerManagement.API.Service.Services;
+using CustomerManagement.API.Utilities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Persistence Layer
 builder.Services.AddSingleton<AccountCollection>();
 builder.Services.AddSingleton<TransactionCollection>();
-builder.Services.AddSingleton(new UserCollection(10));
+builder.Services.AddSingleton<UserCollection>();
 
 // Repository Layer
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -37,8 +40,44 @@ builder.Services.AddScoped<IQueryHandler<GetUserFinancialDataQuery, GetUserFinan
 
 builder.Services.AddControllers();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters.ValidateAudience = false;
+        options.TokenValidationParameters.ValidateIssuer = false;
+        options.TokenValidationParameters.ValidateIssuerSigningKey = true;
+        options.TokenValidationParameters.IssuerSigningKey = JwtTokenUtility.KeyPair;        
+    });
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    options =>
+    {
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Description = "Adds Authorization header using the Bearer scheme.",
+            Scheme = "Bearer",
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+                    Scheme = "oauth2",
+                    In = ParameterLocation.Header
+                },
+                new string[] { }
+            }
+        });
+    });
 
 var app = builder.Build();
 
@@ -50,6 +89,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
