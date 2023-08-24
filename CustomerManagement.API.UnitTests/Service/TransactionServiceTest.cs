@@ -27,10 +27,23 @@
         }
 
         [TestMethod]
-        public async Task CreateTransactionAsync_Should_CallAppropriateRepositoryMethodOnce()
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task CreateTransactionAsync_Should_ThrowExceptionIfTransactionAmountIsZero()
         {
             // Arrange
             var transaction = new TransactionDto();
+            var transactionService = new TransactionService(_transactionRepositoryMock.Object);
+
+            // Act
+            await transactionService.CreateTransactionAsync(transaction);            
+        }
+
+        [TestMethod]
+        public async Task CreateTransactionAsync_Should_CallAppropriateRepositoryMethodOnce()
+        {
+            // Arrange
+            var transaction = new TransactionDto
+            { Amount = 1 };
             var transactionService = new TransactionService(_transactionRepositoryMock.Object);
 
             // Act
@@ -46,6 +59,8 @@
             // Arrange
             var accountNumber = Guid.Empty;
             var transactionService = new TransactionService(_transactionRepositoryMock.Object);
+            _transactionRepositoryMock.Setup(trm => trm.GetTransactionsAsync(It.Is<Guid>(argument => argument == accountNumber)))
+                .ReturnsAsync(new List<Transaction>());
 
             // Act
             await transactionService.GetTransactionsAsync(accountNumber);

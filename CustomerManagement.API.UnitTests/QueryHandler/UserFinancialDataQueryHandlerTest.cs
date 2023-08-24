@@ -32,7 +32,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
             await handler.HandleAsync(command);
 
             // Assert
-            _userServiceMock.Verify(us => us.GetUserAsync(It.Is<Guid>(argument => argument == command.Id)), Times.Once);
+            _userServiceMock.Verify(us => us.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid)), Times.Once);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
                 new AccountBalanceDto{ AccountNumber = Guid.Empty },
                 new AccountBalanceDto{ AccountNumber = Guid.Empty },
             };
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id))).
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid))).
                 ReturnsAsync(userDto);
             _accountServiceMock.Setup(asm => asm.GetAccountsAsync(It.Is<long>(argument => argument == userDto.UserId)))
                 .ReturnsAsync(userAccounts);
@@ -74,7 +74,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
             {
                 CustomerUid = Guid.Empty
             };
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id)));
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid)));
             var handler = new UserFinancialDataQueryHandler(_accountServiceMock.Object, _transactionServiceMock.Object, _userServiceMock.Object);
 
             // Act
@@ -97,7 +97,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
                 UserId = 1
             };
             var userAccounts = new List<AccountBalanceDto?>();
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id))).
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid))).
                 ReturnsAsync(userDto);
             _accountServiceMock.Setup(asm => asm.GetAccountsAsync(It.Is<long>(argument => argument == userDto.UserId)))
                 .ReturnsAsync(userAccounts);
@@ -124,8 +124,10 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
                 UserId = 0
             };
 
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id)))
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid)))
                 .ReturnsAsync(userDto);
+            _accountServiceMock.Setup(asm => asm.GetAccountsAsync(It.Is<long>(argument => argument == userDto.UserId)))
+                .ThrowsAsync(new ArgumentException());
 
             var handler = new UserFinancialDataQueryHandler(_accountServiceMock.Object, _transactionServiceMock.Object, _userServiceMock.Object);
 
@@ -158,7 +160,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
                 null,
                 new TransactionDto { AccountNumber = accountNumber, Amount = 10, TransactionType = Persistence.Enums.TransactionType.Credit}};
 
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id))).
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid))).
                 ReturnsAsync(userDto);
             _accountServiceMock.Setup(asm => asm.GetAccountsAsync(It.Is<long>(argument => argument == userDto.UserId)))
                 .ReturnsAsync(userAccounts);
@@ -197,7 +199,7 @@ namespace CustomerManagement.API.UnitTests.QueryHandler
                 new TransactionDto { AccountNumber = accountNumber, Amount = 11, TransactionType = Persistence.Enums.TransactionType.Debit},
                 new TransactionDto { AccountNumber = accountNumber, Amount = 10, TransactionType = Persistence.Enums.TransactionType.Credit}};
 
-            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.Id))).
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid))).
                 ReturnsAsync(userDto);
             _accountServiceMock.Setup(asm => asm.GetAccountsAsync(It.Is<long>(argument => argument == userDto.UserId)))
                 .ReturnsAsync(userAccounts);
