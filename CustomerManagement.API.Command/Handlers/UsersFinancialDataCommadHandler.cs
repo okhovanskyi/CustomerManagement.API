@@ -10,6 +10,7 @@ namespace CustomerManagement.API.Command.Handlers
     {
         private const string UserNotFoundErrorMessage = "User Not Found.";
         private const string AccountWasNotCreatedErrorMessage = "Account Was Not Created.";
+        private const string TransactionWasNotCreatedErrorMessage = "Transaction Was Not Created.";
 
         private const string CommandCompletedSuccesfullyMessage = "Command Completed Succesfully.";
 
@@ -52,14 +53,23 @@ namespace CustomerManagement.API.Command.Handlers
 
                 if (command.InitialCredit != 0)
                 {
-                    await _transactionService.CreateTransactionAsync(new TransactionDto
+                    var transactionCreated = await _transactionService.CreateTransactionAsync(new TransactionDto
                     {
                         AccountNumber = userAccount.AccountNumber,
-                        Amount = command.InitialCredit,
+                        Amount = Math.Abs(command.InitialCredit),
                         TransactionType = command.InitialCredit > 0 ?
                         Persistence.Enums.TransactionType.Debit :
                         Persistence.Enums.TransactionType.Credit
                     });
+
+                    if (!transactionCreated)
+                    {
+                        return new CommandResult
+                        {
+                            HttpStatusCode = HttpStatusCode.InternalServerError,
+                            Message = TransactionWasNotCreatedErrorMessage
+                        };
+                    }
                 }
             }
             catch (ArgumentException argumentException) 

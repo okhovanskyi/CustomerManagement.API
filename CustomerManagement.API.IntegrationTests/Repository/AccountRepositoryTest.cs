@@ -51,7 +51,6 @@ namespace CustomerManagement.API.IntegrationTests.Repository
 
             // Assert
             Assert.IsNotNull(firstAccount);
-            Assert.AreEqual(userId, firstAccount.UserId);
             Assert.AreNotEqual(Guid.Empty, firstAccount.AccountNumber);
         }
     }

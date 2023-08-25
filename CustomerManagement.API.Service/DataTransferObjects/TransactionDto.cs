@@ -11,5 +11,7 @@ namespace CustomerManagement.API.Service.DataTransferObjects
         public DateTime CreatedDateTime { get; set; }
 
         public TransactionType TransactionType { get; set; }
+
+        public string TransactionTypeName => TransactionType.ToString();
     }
 }

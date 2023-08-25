@@ -16,7 +16,7 @@ namespace CustomerManagement.API.Service.Services
             _transactionRepository = transactionRepository;
         }
 
-        public async Task CreateTransactionAsync(TransactionDto transactionDto)
+        public async Task<bool> CreateTransactionAsync(TransactionDto transactionDto)
         {
             if (transactionDto == null)
             {
@@ -28,7 +28,7 @@ namespace CustomerManagement.API.Service.Services
                 throw new ArgumentException(TransactionAmountErrorMessage);
             }
 
-            await _transactionRepository.CreateTransactionAsync(transactionDto.FromTransactionDto());
+            return await _transactionRepository.CreateTransactionAsync(transactionDto.FromTransactionDto());
         }
 
         public async Task<List<TransactionDto?>> GetTransactionsAsync(Guid accountNumber)

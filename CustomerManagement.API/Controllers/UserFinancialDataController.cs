@@ -44,7 +44,7 @@ namespace CustomerManagement.API.Controllers
         }
 
         // POST api/<UserFinancialDataController>
-        [HttpPost(Name = "OpenNewAccountForExistingUser")]
+        [HttpPost("Account/User", Name = "OpenNewAccountForExistingUser")]
         public async Task<CommandResult> Post(Guid customerUid, long initialCredit)
         {
             return await _commandHandler.HandleAsync(new OpenNewAccountForUserCommand
@@ -55,7 +55,7 @@ namespace CustomerManagement.API.Controllers
         }
 
         // POST api/<UserFinancialDataController>/currentUser
-        [HttpPost("currentUser", Name = "OpenNewAccountForCurrentUser")]
+        [HttpPost("Account/CurrentUser", Name = "OpenNewAccountForCurrentUser")]
         public async Task<CommandResult> Post(long initialCredit)
         {
             if (!Guid.TryParse(HttpContext.User.FindFirst("CustomerUid")?.Value, out Guid customerUid))
