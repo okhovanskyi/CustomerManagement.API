@@ -188,5 +188,37 @@ namespace CustomerManagement.API.UnitTests.CommandHandler
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, result.HttpStatusCode);
         }
+
+        [TestMethod]
+        public async Task HandleAsync_Should_ReturnInternalServerErrorResultIfTransactionWasNotCreated()
+        {
+            // Arrange
+            var command = new OpenNewAccountForUserCommand
+            {
+                CustomerUid = Guid.Empty,
+                InitialCredit = 1
+            };
+            var userDto = new UserDto
+            {
+                UserId = 1
+            };
+            var userAccountDto = new UserAccountDto
+            {
+                AccountNumber = Guid.Empty
+            };
+            _userServiceMock.Setup(usm => usm.GetUserAsync(It.Is<Guid>(argument => argument == command.CustomerUid)))
+                .ReturnsAsync(userDto);
+            _accountServiceMock.Setup(asm => asm.CreateUserAccountAsync(It.Is<long>(argument => argument == userDto.UserId)))
+                .ReturnsAsync(userAccountDto);
+            _transactionServiceMock.Setup(tsm => tsm.CreateTransactionAsync(It.IsAny<TransactionDto>()))
+                .ReturnsAsync(false);
+            var handler = new UsersFinancialDataCommadHandler(_accountServiceMock.Object, _transactionServiceMock.Object, _userServiceMock.Object);
+
+            // Act
+            var result = await handler.HandleAsync(command);
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.HttpStatusCode);
+        }
     }
 }

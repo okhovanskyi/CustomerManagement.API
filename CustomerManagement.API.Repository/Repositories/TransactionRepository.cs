@@ -22,7 +22,7 @@ namespace CustomerManagement.API.Repository.Repositories
 
             return await Task.Run(() =>
             {
-                return !_transactionCollection.AddTransaction(
+                return _transactionCollection.AddTransaction(
                     transaction.Amount,
                     transaction.AccountNumber,
                     transaction.CreatedDateTime,

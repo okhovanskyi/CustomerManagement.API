@@ -4,7 +4,7 @@ namespace CustomerManagement.API.Service.Interfaces
 {
     public interface ITransactionService
     {
-        Task CreateTransactionAsync(TransactionDto transactionDto);
+        Task<bool> CreateTransactionAsync(TransactionDto transactionDto);
 
         Task<List<TransactionDto?>> GetTransactionsAsync(Guid accountNumber);
     }

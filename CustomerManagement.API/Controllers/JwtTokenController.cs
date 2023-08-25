@@ -2,12 +2,17 @@
 using CustomerManagement.API.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CustomerManagement.API.Controllers
 {
+    /// <summary>
+    /// ONLY FOR TESTING!
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
+    [ExcludeFromCodeCoverage]
     public class JwtTokenController : ControllerBase
     {
         private readonly UserCollection _userCollection;

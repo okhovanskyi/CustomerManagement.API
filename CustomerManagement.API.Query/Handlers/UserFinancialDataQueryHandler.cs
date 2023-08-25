@@ -63,7 +63,7 @@ namespace CustomerManagement.API.Query.Handlers
 
                     var transactions = await _transactionService.GetTransactionsAsync(account.AccountNumber);
 
-                    if (transactions == null || transactions.Count == 0)
+                    if (transactions == null)
                     {
                         continue;
                     }
@@ -80,6 +80,8 @@ namespace CustomerManagement.API.Query.Handlers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                     result.AccountBalanceDtos.Add(account);
+
+                    userDto.Balance += account.Balance;
                 }                
 
                 return result;
